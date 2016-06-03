@@ -1,29 +1,36 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
 
-function conventionalReducers(state = 0, action) {
-  if(action.type.startsWith("CONV_REDUX/")) {
-    var methodName = action.type.replace('CONV_REDUX/', '').split(':').pop();
-    methodName = 'on' + methodName.charAt(0).toUpperCase() + methodName.slice(1);
 
-    var interactor = action.interactor;
-    interactor.state = state;
+function conventionalReducer(name) {
+ return function conventionalReducers(state = {}, action) {
+   if(action.type.startsWith("CONV_REDUX/" + name)) {
+     var methodName = action.type.replace('CONV_REDUX/', '').split(':').pop();
+     methodName = 'on' + methodName.charAt(0).toUpperCase() + methodName.slice(1);
 
-    if (interactor[methodName]) {
-      interactor[methodName]();
-    }
+     var interactor = action.interactor;
+     if(state != {}) {
+       interactor.state = state;
+     }
 
-    return interactor.state;
-  }
+     if (interactor[methodName]) {
+       interactor[methodName].apply(interactor, action.args);
+     }
 
-  return state;
+     console.log('STATE' + interactor.state);
+     return interactor.state;
+   }
+
+   return name == 'counter' ? 0 : {};
+ }
 }
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     // Add sync reducers here
     router,
-    conventionalReducers,
+    counter: conventionalReducer('counter'),
+    github_userdata: conventionalReducer('github_userdata'),
     ...asyncReducers
   })
 }

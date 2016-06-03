@@ -30,5 +30,5 @@ class Counter extends React.Component {
 }
 
 export default connect((state) => ({
-  counter: state.conventionalReducers
+  counter: state.counter
 }))(Counter)

@@ -3,24 +3,36 @@ import { connect } from 'react-redux'
 
 class ApiRequest extends React.Component {
   componentDidMount() {
-    this.props.dispatch('github_userdata:fetch', 'mjaneczek')
+    this.props.dispatch(['github_userdata:fetch', 'mjaneczek'])
   }
 
   handleFetchUser(event) {
     if (event.key === 'Enter') {
-      this.props.dispatch('github_userdata:fetch', event.target.value)
+      this.props.dispatch(['github_userdata:fetch', event.target.value])
     }
   }
 
   render () {
     return (
       <div>
-        <input type="text" placeholder="Github username" onKeyPress = {::this.handleFetchUser}/>
+        <p>
+          <input type="text" placeholder="Github username" onKeyPress = {::this.handleFetchUser}/>
+        </p>
+
+        { this.props.githubResponse.user && <div className="well">
+          {JSON.stringify(this.props.githubResponse.user, null, 2)}
+        </div> }
+
+        { this.props.githubResponse.error && <div className="alert alert-danger">
+          {this.props.githubResponse.error }
+        </div> }
+
+        { this.props.githubResponse.loading && <h1>Loading...</h1> }
       </div>
     )
   }
 }
 
 export default connect((state) => ({
-  counter: state.conventionalReducers
+  githubResponse: state.github_userdata
 }))(ApiRequest)
