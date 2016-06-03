@@ -2,6 +2,21 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import makeRootReducer from './reducers'
+import 'whatwg-fetch';
+
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
+  }
+}
+
+function parseJSON(response) {
+  return response.json()
+}
 
 class CounterInteractor {
   state = 0;
@@ -23,6 +38,38 @@ class CounterInteractor {
   }
 }
 
+class GithubUserdataInteractor {
+  state = {};
+
+  fetch(userName) {
+    fetch('https://api.github.com/users/mjaneczek')
+    .then(checkStatus)
+    .then(parseJSON)
+    .then((data) => {
+      this.dispatch('github_userdata:fetchSuccess')
+    }).catch((error) => {
+      this.dispatch('github_userdata:fetchError')
+    })
+  }
+
+  onFetch() {
+    console.log('on fetch');
+  }
+
+  onFetchSuccess() {
+    alert('done!');
+  }
+
+  onFetchError() {
+    alert('error');
+  }
+}
+
+var symbolHash = {
+  'counter': CounterInteractor,
+  'github_userdata': GithubUserdataInteractor,
+};
+
 export default (initialState = {}, history) => {
   // ======================================================
   // Middleware Configuration
@@ -30,10 +77,10 @@ export default (initialState = {}, history) => {
 
   const conventionalReduxMiddleware = store => next => action => {
     if (typeof action === 'string' || action instanceof String) {
-      var interactor = new CounterInteractor();
-      interactor.dispatch = store.dispatch;
+      var [interactorSymbol, methodName] = action.replace('CONV_REDUX/', '').split(':');
 
-      var methodName = action.split(':').pop();
+      var interactor = new symbolHash[interactorSymbol]();
+      interactor.dispatch = store.dispatch;
 
       if(interactor[methodName]) {
         interactor[methodName]();
