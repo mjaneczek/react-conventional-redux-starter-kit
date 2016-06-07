@@ -31,6 +31,7 @@ export const makeRootReducer = (asyncReducers) => {
     router,
     counter: conventionalReducer('counter'),
     github_userdata: conventionalReducer('github_userdata'),
+    github_repos: conventionalReducer('github_repos'),
     ...asyncReducers
   })
 }
