@@ -3,6 +3,7 @@ import Home from './Home'
 import Counter from './Counter/Counter'
 import ApiRequest from './ApiRequest/ApiRequest'
 import ManyApiRequests from './ManyApiRequests/ManyApiRequests'
+import Todo from './Todo/Todo'
 
 export default (store) => ({
   path: '/',
@@ -11,6 +12,7 @@ export default (store) => ({
   childRoutes: [
     { path: 'counter', component: Counter},
     { path: 'simple_request', component: ApiRequest },
-    { path: 'many_requests', component: ManyApiRequests }
+    { path: 'many_requests', component: ManyApiRequests },
+    { path: 'todo', component: Todo }
   ]
 });
