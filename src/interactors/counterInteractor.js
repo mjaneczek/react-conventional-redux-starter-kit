@@ -6,14 +6,14 @@ export default class CounterInteractor {
   }
 
   onIncrement() {
-    this.state = this.state + 1;
+    return this.state + 1;
   }
 
   onIncrementBy100() {
-    this.state = this.state + 100;
+    return this.state + 100;
   }
 
   onDouble() {
-    this.state = this.state * 2;
+    return this.state * 2;
   }
 }

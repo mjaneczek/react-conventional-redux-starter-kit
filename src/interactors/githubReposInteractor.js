@@ -56,34 +56,35 @@ export default class GithubReposInteractor {
   }
 
   onFetch() {
-    this.state = {loading: true, user: [], gists: [], readme: 'Loading...'}
+    return {loading: true, user: [], gists: [], readme: 'Loading...'}
   }
 
   onFetchReposSuccess(userData) {
-    this.state = {user: userData, gists: this.state.gists, readme: this.state.readme}
+    return {user: userData, gists: this.state.gists, readme: this.state.readme}
   }
 
   onFetchReposError(error) {
-    this.state = {error: error.message}
+    return {error: error.message}
   }
 
   onFetchGistsSuccess(gistData) {
-    this.state = {user: this.state.user, gists: gistData, readme: this.state.readme}
+    return {user: this.state.user, gists: gistData, readme: this.state.readme}
   }
 
   onFetchGistsError(error) {
-    this.state = {error: error.message}
+    return {error: error.message}
   }
 
   onFetchReadme(repoName) {
-    this.state = {user: this.state.user, gists: this.state.gists, readme: `Loading ${repoName}...`}
+    return {user: this.state.user, gists: this.state.gists, readme: `Loading ${repoName}...`}
   }
 
   onFetchReadmeSuccess(data) {
-    this.state = {user: this.state.user, gists: this.state.gists, readme: window.atob(data.content)}
+    return {user: this.state.user, gists: this.state.gists, readme: window.atob(data.content)}
   }
 
   onDone(data) {
     console.log(data);
+    return this.state;
   }
 }

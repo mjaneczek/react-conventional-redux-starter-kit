@@ -2,18 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import makeRootReducer from './reducers'
-
-import CounterInteractor from "../interactors/counterInteractor";
-import GithubUserdataInteractor from "../interactors/githubUserdataInteractor";
-import GithubReposInteractor from "../interactors/githubReposInteractor";
-import TodoInteractor from "../interactors/todoInteractor";
-
-var symbolHash = {
-  'counter': CounterInteractor,
-  'github_userdata': GithubUserdataInteractor,
-  'github_repos': GithubReposInteractor,
-  'todo': TodoInteractor
-};
+import interactorsHash from '../interactors/index'
 
 export default (initialState = {}, history) => {
   // ======================================================
@@ -34,14 +23,14 @@ export default (initialState = {}, history) => {
         [interactorSymbol, methodName] = action.replace('CONV_REDUX/', '').split(':');
       }
 
-      var interactor = new symbolHash[interactorSymbol]();
+      var interactor = interactorsHash[interactorSymbol];
       interactor.dispatch = store.dispatch;
 
       if(interactor[methodName]) {
         interactor[methodName].apply(interactor, args)
       }
 
-      return next({type: 'CONV_REDUX/' + actionName, interactor: interactor, args: args})
+      return next({type: 'CONV_REDUX/' + actionName, args: args})
     } else {
       return next(action)
     }

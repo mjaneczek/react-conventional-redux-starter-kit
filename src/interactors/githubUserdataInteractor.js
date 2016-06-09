@@ -29,14 +29,14 @@ export default class GithubUserdataInteractor {
   }
 
   onFetch() {
-    this.state = { loading: true }
+    return { loading: true }
   }
 
   onFetchSuccess(userData) {
-    this.state = { user: userData }
+    return { user: userData }
   }
 
   onFetchError(error) {
-    this.state = { error: error.message }
+    return { error: error.message }
   }
 }
