@@ -1,18 +1,4 @@
-import 'whatwg-fetch';
-
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response
-  } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
-  }
-}
-
-function parseJSON(response) {
-  return response.json()
-}
+import { fetchResource } from '../services/api'
 
 export default class GithubReposInteractor {
   state = {};
@@ -20,9 +6,7 @@ export default class GithubReposInteractor {
   fetch(userName) {
     Promise.all([
 
-      fetch('https://api.github.com/users/' + userName + '/repos')
-      .then(checkStatus)
-      .then(parseJSON)
+      fetchResource('https://api.github.com/users/' + userName + '/repos')
       .then((data) => {
         this.dispatch(['github_repos:fetchReposSuccess', data])
         this.dispatch(['github_repos:fetchReadme', data[0].name])
@@ -30,9 +14,7 @@ export default class GithubReposInteractor {
         this.dispatch(['github_repos:fetchReposError', error])
       }),
 
-      fetch('https://api.github.com/users/' + userName + '/gists')
-      .then(checkStatus)
-      .then(parseJSON)
+      fetchResource('https://api.github.com/users/' + userName + '/gists')
       .then((data) => {
         this.dispatch(['github_repos:fetchGistsSuccess', data])
       }).catch((error) => {
@@ -45,9 +27,7 @@ export default class GithubReposInteractor {
   }
 
   fetchReadme(repoName) {
-    fetch('https://api.github.com/repos/mjaneczek/' + repoName + '/readme')
-    .then(checkStatus)
-    .then(parseJSON)
+    fetchResource('https://api.github.com/repos/mjaneczek/' + repoName + '/readme')
     .then((data) => {
       this.dispatch(['github_repos:fetchReadmeSuccess', data])
     }).catch((error) => {

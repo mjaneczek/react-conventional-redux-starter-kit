@@ -1,26 +1,10 @@
-import 'whatwg-fetch';
-
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response
-  } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
-  }
-}
-
-function parseJSON(response) {
-  return response.json()
-}
+import { fetchResource } from '../services/api'
 
 export default class GithubUserdataInteractor {
   state = {};
 
   fetch(userName) {
-    fetch('https://api.github.com/users/' + userName)
-    .then(checkStatus)
-    .then(parseJSON)
+    fetchResource('https://api.github.com/users/' + userName)
     .then((data) => {
       this.dispatch(['github_userdata:fetchSuccess', data])
     }).catch((error) => {
