@@ -16,16 +16,12 @@ class Todo extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props.editId);
-
     if(this.props.editId != null) {
       this.refs.todoInput.value = this.props.todos[this.props.editId];
     }
   }
 
   render () {
-    console.log('rererender!!!!');
-
     return (
       <div>
         <div className="row">

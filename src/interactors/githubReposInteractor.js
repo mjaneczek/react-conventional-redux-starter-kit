@@ -84,7 +84,6 @@ export default class GithubReposInteractor {
   }
 
   onDone(data) {
-    console.log(data);
     return this.state;
   }
 }
