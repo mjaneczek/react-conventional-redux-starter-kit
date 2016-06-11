@@ -4,12 +4,7 @@ export default class GithubUserdataInteractor {
   state = {};
 
   fetch(userName) {
-    fetchResource('https://api.github.com/users/' + userName)
-    .then((data) => {
-      this.dispatch(['github_userdata:fetchSuccess', data])
-    }).catch((error) => {
-      this.dispatch(['github_userdata:fetchError', error])
-    })
+    return fetchResource('https://api.github.com/users/' + userName)
   }
 
   onFetch() {

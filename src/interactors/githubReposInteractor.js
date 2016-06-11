@@ -27,12 +27,7 @@ export default class GithubReposInteractor {
   }
 
   fetchReadme(repoName) {
-    fetchResource('https://api.github.com/repos/mjaneczek/' + repoName + '/readme')
-    .then((data) => {
-      this.dispatch(['github_repos:fetchReadmeSuccess', data])
-    }).catch((error) => {
-      this.dispatch(['github_repos:fetchReadmeError', error])
-    })
+    return fetchResource('https://api.github.com/repos/mjaneczek/' + repoName + '/readme')
   }
 
   onFetch() {

@@ -18,7 +18,15 @@ export const conventionalReduxMiddleware = store => next => action => {
     interactor.dispatch = store.dispatch;
 
     if(interactor[methodName]) {
-      interactor[methodName].apply(interactor, args)
+      var result = interactor[methodName].apply(interactor, args)
+
+      if (result && 'function' === typeof result.then) {
+        result.then((data) => {
+          store.dispatch([interactorSymbol + ':' + methodName + 'Success', data])
+        }).catch((error) => {
+          store.dispatch([interactorSymbol + ':' + methodName + 'Error', error])
+        })
+      }
     }
 
     return next({type: 'CONV_REDUX/' + actionName, args: args})
