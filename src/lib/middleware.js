@@ -25,7 +25,10 @@ export const conventionalReduxMiddleware = store => next => action => {
           store.dispatch([interactorSymbol + ':' + methodName + 'Success', data])
         }).catch((error) => {
           store.dispatch([interactorSymbol + ':' + methodName + 'Error', error])
-        })
+        });
+
+        next({type: 'CONV_REDUX/' + actionName, args: args});
+        return result;
       }
     }
 

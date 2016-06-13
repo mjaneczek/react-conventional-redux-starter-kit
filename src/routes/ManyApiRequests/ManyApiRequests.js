@@ -13,7 +13,7 @@ class ManyApiRequests extends React.Component {
   }
 
   handleSelectRepo(repositoryName) {
-    this.props.dispatch(['github_repos:fetchReadme', repositoryName])
+    this.props.dispatch(['readme:fetch', this.props.githubResponse.userName, repositoryName])
   }
 
   render () {
@@ -27,7 +27,7 @@ class ManyApiRequests extends React.Component {
 
         { this.props.githubResponse.loading && <h1>Loading...</h1> }
 
-        { this.props.githubResponse.user && this.props.githubResponse.gists &&
+        { this.props.repos && this.props.gists && this.props.repos.map && this.props.gists.map &&
 
         <div className="row">
           <div className="col-md-3">
@@ -35,20 +35,20 @@ class ManyApiRequests extends React.Component {
               <a href="#" className="list-group-item active">
                 Repositories
               </a>
-              {this.props.githubResponse.user.map((r) => <a onClick={() => this.handleSelectRepo(r.name)} className="list-group-item">{r.name}</a>)}
+              {this.props.repos.map((r) => <a onClick={() => this.handleSelectRepo(r.name)} className="list-group-item">{r.name}</a>)}
             </div>
 
             <div className="list-group">
               <a href="#" className="list-group-item active">
                 Gists
               </a>
-              {this.props.githubResponse.gists.map((g) => <a href="#" className="list-group-item">{g.description}</a>)}
+              {this.props.gists.map((g) => <a href="#" className="list-group-item">{g.description}</a>)}
             </div>
           </div>
 
           <div className="col-md-9">
-            { this.props.githubResponse.readme && <div className="well">
-              {this.props.githubResponse.readme}
+            { this.props.readme.name && <div className="well">
+              {window.atob(this.props.readme.content)}
             </div> }
 
             { this.props.githubResponse.error && <div className="alert alert-danger">
@@ -63,5 +63,8 @@ class ManyApiRequests extends React.Component {
 }
 
 export default connect((state) => ({
-  githubResponse: state.github_repos
+  githubResponse: state.github_repos,
+  repos: state.repos,
+  gists: state.gists,
+  readme: state.readme
 }))(ManyApiRequests)

@@ -19,8 +19,8 @@ class ApiRequest extends React.Component {
           <input type="text" placeholder="Github username" onKeyPress = {::this.handleFetchUser}/>
         </p>
 
-        { this.props.githubResponse.user && <div className="well">
-          {JSON.stringify(this.props.githubResponse.user, null, 2)}
+        { this.props.githubResponse && <div className="well">
+          {JSON.stringify(this.props.githubResponse, null, 2)}
         </div> }
 
         { this.props.githubResponse.error && <div className="alert alert-danger">
