@@ -1,4 +1,4 @@
-import { fetchResource } from '../services/api'
+import { fetchResource } from '../../services/api'
 
 export default class GithubUserdataInteractor {
   state = {};

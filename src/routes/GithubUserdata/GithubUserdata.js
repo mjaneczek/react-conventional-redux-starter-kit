@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-class ApiRequest extends React.Component {
+class GithubUserdata extends React.Component {
   componentDidMount() {
     this.props.dispatch(['github_userdata:fetch', 'mjaneczek'])
   }
@@ -35,4 +35,4 @@ class ApiRequest extends React.Component {
 
 export default connect((state) => ({
   githubResponse: state.github_userdata
-}))(ApiRequest)
+}))(GithubUserdata)

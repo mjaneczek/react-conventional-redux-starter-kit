@@ -1,18 +1,18 @@
 import CoreLayout from '../layouts/CoreLayout/CoreLayout'
 import Home from './Home'
-import Counter from './Counter/Counter'
-import ApiRequest from './ApiRequest/ApiRequest'
-import ManyApiRequests from './ManyApiRequests/ManyApiRequests'
-import Todo from './Todo/Todo'
+import Counter from './Counter'
+import ApiRequest from './GithubUserdata'
+import ManyApiRequests from './GithubProfile'
+import Todo from './Todo'
 
-export default (store) => ({
+export default () => ({
   path: '/',
   component: CoreLayout,
-  indexRoute: Home,
+  indexRoute: Home(),
   childRoutes: [
-    { path: 'counter', component: Counter},
-    { path: 'simple_request', component: ApiRequest },
-    { path: 'many_requests', component: ManyApiRequests },
-    { path: 'todo', component: Todo }
+    Counter(),
+    ApiRequest(),
+    ManyApiRequests(),
+    Todo()
   ]
 });

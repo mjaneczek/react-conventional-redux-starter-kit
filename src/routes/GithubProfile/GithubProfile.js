@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-class ManyApiRequests extends React.Component {
+class GithubProfile extends React.Component {
   componentDidMount() {
-    this.props.dispatch(['github_repos:fetch', 'mjaneczek']);
+    this.props.dispatch(['github_profile:fetch', 'mjaneczek']);
   }
 
   handleFetchUser(event) {
     if (event.key === 'Enter') {
-      this.props.dispatch(['github_repos:fetch', event.target.value]);
+      this.props.dispatch(['github_profile:fetch', event.target.value]);
     }
   }
 
@@ -63,8 +63,8 @@ class ManyApiRequests extends React.Component {
 }
 
 export default connect((state) => ({
-  githubResponse: state.github_repos,
+  githubResponse: state.github_profile,
   repos: state.repos,
   gists: state.gists,
   readme: state.readme
-}))(ManyApiRequests)
+}))(GithubProfile)

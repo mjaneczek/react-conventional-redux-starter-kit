@@ -1,4 +1,4 @@
-import { fetchResource } from '../services/api'
+import { fetchResource } from './api'
 import format from 'string-format';
 
 export default class ResourceInteractor {

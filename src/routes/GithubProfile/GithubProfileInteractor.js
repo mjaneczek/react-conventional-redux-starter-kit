@@ -1,6 +1,4 @@
-import { fetchResource } from '../services/api'
-
-export default class GithubReposInteractor {
+export default class GithubProfileInteractor {
   state = {};
 
   fetch(userName) {
