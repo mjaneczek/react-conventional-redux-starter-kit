@@ -1,9 +1,8 @@
 export default class TodoInteractor {
-  state = { todos: [] };
+  state = { todos: [], edit: null };
 
   onAdd(text) {
-    var existing_todos = this.state.todos || [];
-    return { todos: existing_todos.concat([text]) }
+    return { todos: this.state.todos.concat([text]) }
   }
 
   onEdit(id) {

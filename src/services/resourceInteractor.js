@@ -2,15 +2,16 @@ import { fetchResource } from './api'
 import format from 'string-format';
 
 export default class ResourceInteractor {
-  state = {};
+  state = null;
   resourceUrl = '';
 
-  constructor(resourceUrl) {
+  constructor(resourceUrl, defaultState = {}) {
     this.resourceUrl = resourceUrl;
+    this.state = defaultState;
   }
 
-  fetch(a1, a2) {
-    return fetchResource(format(this.resourceUrl, a1, a2))
+  fetch(urlParam) {
+    return fetchResource(format(this.resourceUrl, urlParam))
   }
 
   onFetch() {

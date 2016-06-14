@@ -13,7 +13,7 @@ class GithubProfile extends React.Component {
   }
 
   handleSelectRepo(repositoryName) {
-    this.props.dispatch(['readme:fetch', this.props.githubResponse.userName, repositoryName])
+    this.props.dispatch(['readme:fetch', `${this.props.githubResponse.userName}/${repositoryName}`])
   }
 
   render () {
@@ -27,7 +27,7 @@ class GithubProfile extends React.Component {
 
         { this.props.githubResponse.loading && <h1>Loading...</h1> }
 
-        { this.props.repos && this.props.gists && this.props.repos.map && this.props.gists.map &&
+        { !this.props.repos.loading && !this.props.gists.loading &&
 
         <div className="row">
           <div className="col-md-3">
@@ -35,24 +35,26 @@ class GithubProfile extends React.Component {
               <a href="#" className="list-group-item active">
                 Repositories
               </a>
-              {this.props.repos.map((r) => <a onClick={() => this.handleSelectRepo(r.name)} className="list-group-item">{r.name}</a>)}
+              {this.props.repos.map((r) => <a key={r.id} onClick={() => this.handleSelectRepo(r.name)} className="list-group-item">{r.name}</a>)}
             </div>
 
             <div className="list-group">
               <a href="#" className="list-group-item active">
                 Gists
               </a>
-              {this.props.gists.map((g) => <a href="#" className="list-group-item">{g.description}</a>)}
+              {this.props.gists.map((g) => <a key={g.id} href="#" className="list-group-item">{g.description}</a>)}
             </div>
           </div>
 
           <div className="col-md-9">
-            { this.props.readme.name && <div className="well">
+            { this.props.readme.loading && <h1>Loading...</h1> }
+
+            { this.props.readme.content && <div className="well">
               {window.atob(this.props.readme.content)}
             </div> }
 
-            { this.props.githubResponse.error && <div className="alert alert-danger">
-              {this.props.githubResponse.error }
+            { this.props.readme.error && <div className="alert alert-danger">
+              {this.props.readme.error }
             </div> }
           </div>
         </div>

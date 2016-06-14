@@ -4,7 +4,7 @@ export default class GithubProfileInteractor {
   fetch(userName) {
     return Promise.all([
       this.dispatch(['repos:fetch', userName]).then(repos => {
-        this.dispatch(['readme:fetch', userName, repos[0].name])
+        this.dispatch(['readme:fetch', `${userName}/${repos[0].name}`])
       }),
 
       this.dispatch(['gists:fetch', userName])
