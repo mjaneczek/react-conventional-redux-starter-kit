@@ -1,4 +1,4 @@
-import {registerInteractor} from '../../lib';
+import {registerInteractor} from 'conventional-redux';
 import Todo from "./Todo";
 import TodoInteractor from "./TodoInteractor";
 

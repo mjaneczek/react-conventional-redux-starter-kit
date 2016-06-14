@@ -1,4 +1,4 @@
-import {registerInteractors} from '../../lib';
+import {registerInteractors} from 'conventional-redux';
 import GithubProfile from "./GithubProfile";
 import GithubProfileInteractor from "./GithubProfileInteractor";
 import ResourceInteractor from "../../services/resourceInteractor";

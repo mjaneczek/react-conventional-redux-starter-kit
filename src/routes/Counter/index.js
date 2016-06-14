@@ -1,4 +1,4 @@
-import {registerInteractor} from '../../lib';
+import {registerInteractor} from 'conventional-redux';
 import Counter from "./Counter";
 import CounterInteractor from "./CounterInteractor";
 

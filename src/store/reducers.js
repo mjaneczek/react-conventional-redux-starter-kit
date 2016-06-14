@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
-import { conventionalReducers } from '../lib';
+import { conventionalReducers } from 'conventional-redux';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
