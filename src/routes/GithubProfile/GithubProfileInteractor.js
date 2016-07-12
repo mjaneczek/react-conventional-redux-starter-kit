@@ -16,6 +16,10 @@ export default class GithubProfileInteractor {
   }
 
   onFetchSuccess(response) {
-    return { loading: false, userName: this.state.userName }
+    return { ...this.state, loading: false }
+  }
+
+  onFetchError(response) {
+    return { ...this.state, loading: false, error: response.message}
   }
 }

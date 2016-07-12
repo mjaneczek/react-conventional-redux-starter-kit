@@ -2,7 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import makeRootReducer from './reducers'
-import { conventionalReduxMiddleware, registerInteractors } from 'conventional-redux';
+import { conventionalReduxMiddleware, setRecreateReducerFunction } from 'conventional-redux';
 
 export default (initialState = {}, history) => {
   // ======================================================
@@ -33,6 +33,8 @@ export default (initialState = {}, history) => {
     )
   )
   store.asyncReducers = {}
+
+  setRecreateReducerFunction(() => store.replaceReducer(makeRootReducer()));
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {

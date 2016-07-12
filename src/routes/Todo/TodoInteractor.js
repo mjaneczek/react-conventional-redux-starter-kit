@@ -6,7 +6,7 @@ export default class TodoInteractor {
   }
 
   onEdit(id) {
-    return { todos: this.state.todos, edit: id}
+    return { ...this.state, edit: id}
   }
 
   onEditSuccess(newValue) {

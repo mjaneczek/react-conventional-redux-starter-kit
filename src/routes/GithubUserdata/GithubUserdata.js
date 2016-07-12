@@ -1,14 +1,13 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
-class GithubUserdata extends React.Component {
+export default class GithubUserdata extends React.Component {
   componentDidMount() {
-    this.props.dispatch(['github_userdata:fetch', 'mjaneczek'])
+    this.github_userdata.fetch('mjaneczek');
   }
 
   handleFetchUser(event) {
     if (event.key === 'Enter') {
-      this.props.dispatch(['github_userdata:fetch', event.target.value])
+      this.github_userdata.fetch(event.target.value);
     }
   }
 
@@ -19,20 +18,16 @@ class GithubUserdata extends React.Component {
           <input type="text" placeholder="Github username" onKeyPress = {::this.handleFetchUser}/>
         </p>
 
-        { this.props.githubResponse.user && <div className="well">
-          {JSON.stringify(this.props.githubResponse.user, null, 2)}
+        { this.p('github_userdata.loading') && <h1>Loading...</h1> }
+
+        { this.p('github_userdata.user') && <div className="well">
+          {JSON.stringify(this.p('github_userdata.user'), null, 2)}
         </div> }
 
-        { this.props.githubResponse.error && <div className="alert alert-danger">
-          {this.props.githubResponse.error }
+        { this.p('github_userdata.error') && <div className="alert alert-danger">
+          {this.p('github_userdata.error') }
         </div> }
-
-        { this.props.githubResponse.loading && <h1>Loading...</h1> }
       </div>
     )
   }
 }
-
-export default connect((state) => ({
-  githubResponse: state.github_userdata
-}))(GithubUserdata)

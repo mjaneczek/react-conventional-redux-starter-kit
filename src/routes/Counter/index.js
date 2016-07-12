@@ -1,8 +1,10 @@
-import {registerInteractor} from 'conventional-redux';
+import {replaceDynamicInteractors, connectAllInteractors} from 'conventional-redux';
 import Counter from "./Counter";
 import CounterInteractor from "./CounterInteractor";
 
 export default () => {
-  registerInteractor('counter', new CounterInteractor());
-  return { path: 'counter', component: Counter }
+  return { path: 'counter', getComponent: (state, cb) => {
+    replaceDynamicInteractors({counter: new CounterInteractor()});
+    cb(null, connectAllInteractors(Counter))
+  }}
 }
