@@ -10,12 +10,16 @@ export default class TodoInteractor {
   }
 
   onEditSuccess(newValue) {
-    this.state.todos[this.state.edit] = newValue;
-    return { todos: this.state.todos.slice(), edit: null}
+    let newTodos = this.state.todos.slice();
+    newTodos[this.state.edit] = newValue;
+
+    return { todos: newTodos, edit: null}
   }
 
   onDelete(id) {
-    this.state.todos.splice(id, 1);
-    return { todos: this.state.todos.slice() }
+    let newTodos = this.state.todos.slice();
+    newTodos.splice(id, 1);
+
+    return { todos: newTodos }
   }
 }
